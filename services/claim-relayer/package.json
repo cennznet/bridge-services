@@ -2,7 +2,7 @@
   "name": "claim-relayer",
   "scripts": {
     "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
-    "start:claim-processor": "node ./dist/services/claim-relayer/commands/claim-processor.js",
-    "start:claim-publisher": "node ./dist/services/claim-relayer/commands/claim-publisher.js"
+    "start:claim-publisher": "node ./dist/services/claim-relayer/commands/claim-publisher.js",
+    "start:claim-subscriber": "node ./dist/services/claim-relayer/commands/claim-subscriber.js"
   }
 }

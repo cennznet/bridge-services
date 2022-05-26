@@ -10,11 +10,13 @@
     "node": ">=16"
   },
   "scripts": {
-    "dev:cennznet": "docker run -p 9944:9944 -p 9933:9933 cennznet/cennznet:latest --dev --unsafe-ws-external --unsafe-rpc-external",
+    "dev:cennz": "docker run -p 9944:9944 -p 9933:9933 cennznet/cennznet:latest --dev --unsafe-ws-external --unsafe-rpc-external",
+    "dev:mongo": "docker run -d -p 27017:27017 --name bridgeDb mongo:latest",
+    "dev:rabbit": "docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.10-management",
     "format": "prettier --config .prettierrc.json ./ --write",
     "build:claim-relayer": "yarn workspace claim-relayer build",
-    "start:claim-relayer:processor": "yarn workspace claim-relayer start:claim-processor",
-    "start:claim-relayer:publisher": "yarn workspace claim-relayer start:claim-publisher"
+    "start:claim-relayer:publisher": "yarn workspace claim-relayer start:claim-publisher",
+    "start:claim-relayer:subscriber": "yarn workspace claim-relayer start:claim-subscriber"
   },
   "dependencies": {
     "@cennznet/api": "^2.1.1-alpha.2",
