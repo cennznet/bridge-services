@@ -35,6 +35,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cennznet/bridge-contracts@cennznet/bridge-contracts#main":
+  version: 1.0.0
+  resolution: "@cennznet/bridge-contracts@https://github.com/cennznet/bridge-contracts.git#commit=7140070c7553fbad0c79d5ffe1f0fee3af23583c"
+  dependencies:
+    "@types/chai": ^4.2.19
+    "@types/mocha": ^8.2.2
+    amqplib: ^0.8.0
+    concurrently: ^7.1.0
+    dotenv: ^8.2.0
+    elliptic: ^6.5.4
+    ethereum-waffle: ^3.4.0
+    moment: ^2.29.1
+    node-libcurl: ^2.3.3
+    wait-on: ^6.0.1
+    winston: ^3.2.1
+  checksum: 4fee94a1bc9e1bf59de0881772d6ba9bb93a623d2db9691186384691e89d5dad4477489b40ed942f99b3c5a70ba07d9891aaf8288848e483e96f5b127634d8a8
+  languageName: node
+  linkType: hard
+
 "@cennznet/types@npm:^2.1.1-alpha.2, @cennznet/types@npm:^2.1.1-alpha.4":
   version: 2.1.1-alpha.4
   resolution: "@cennznet/types@npm:2.1.1-alpha.4"
@@ -2883,30 +2902,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bridge-contracts@cennznet/bridge-contracts#main":
-  version: 1.0.0
-  resolution: "bridge-contracts@https://github.com/cennznet/bridge-contracts.git#commit=7140070c7553fbad0c79d5ffe1f0fee3af23583c"
-  dependencies:
-    "@types/chai": ^4.2.19
-    "@types/mocha": ^8.2.2
-    amqplib: ^0.8.0
-    concurrently: ^7.1.0
-    dotenv: ^8.2.0
-    elliptic: ^6.5.4
-    ethereum-waffle: ^3.4.0
-    moment: ^2.29.1
-    node-libcurl: ^2.3.3
-    wait-on: ^6.0.1
-    winston: ^3.2.1
-  checksum: f250535fa2e7ff9828716f399bcf5ec8249056de33ed5723ca8916d8f1a1d70ee7edccd8647f0bb577b3b9af26dcf8215cad9bb0401779396acdb0525f4d9891
-  languageName: node
-  linkType: hard
-
 "bridge-services@workspace:.":
   version: 0.0.0-use.local
   resolution: "bridge-services@workspace:."
   dependencies:
     "@cennznet/api": ^2.1.1-alpha.2
+    "@cennznet/bridge-contracts": "cennznet/bridge-contracts#main"
     "@cennznet/types": ^2.1.1-alpha.2
     "@cloudamqp/amqp-client": ^2.0.3
     "@slack/webhook": ^6.1.0
@@ -2916,7 +2917,6 @@ __metadata:
     "@types/prettier": ^2
     amqplib: ^0.9.1
     bn.js: ^5.2.1
-    bridge-contracts: "cennznet/bridge-contracts#main"
     dotenv: ^16.0.1
     ethereum-waffle: ^3.4.4
     ethers: ^5.6.5

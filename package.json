@@ -18,11 +18,11 @@
   },
   "dependencies": {
     "@cennznet/api": "^2.1.1-alpha.2",
+    "@cennznet/bridge-contracts": "cennznet/bridge-contracts#main",
     "@cloudamqp/amqp-client": "^2.0.3",
     "@slack/webhook": "^6.1.0",
     "amqplib": "^0.9.1",
     "bn.js": "^5.2.1",
-    "bridge-contracts": "cennznet/bridge-contracts#main",
     "ethers": "^5.6.5",
     "mongoose": "^6.3.4",
     "winston": "^3.7.2"

@@ -11,7 +11,7 @@ import {
 	RABBBITMQ_SERVER,
 	TOPIC_CENNZnet_CONFIRM,
 } from "@/libs/constants";
-import ERC20Peg from "bridge-contracts/abi/ERC20Peg.json";
+import ERC20Peg from "@cennznet/bridge-contracts/abi/ERC20Peg.json";
 import amqp from "amqplib";
 import {
 	handleDepositEvent,
