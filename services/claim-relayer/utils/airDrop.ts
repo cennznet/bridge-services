@@ -5,13 +5,14 @@ import {
 	AIRDROP_AMOUNT,
 	CENNZNET_NETWORK,
 	CENNZNET_SIGNER,
-	SPENDING_ASSET_ID,
+	NETWORK_DETAILS,
 } from "@/libs/constants";
 import { BridgeClaim } from "@/libs/models";
 import { Api } from "@cennznet/api";
 import { getLogger, sendSlackAlert } from "@/libs/utils";
 import { Keyring } from "@polkadot/keyring";
 
+const { SPENDING_ASSET_ID } = NETWORK_DETAILS;
 const logger = getLogger("RequestProcessor");
 
 export async function airDrop(
