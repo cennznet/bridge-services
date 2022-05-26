@@ -1,6 +1,6 @@
 import { CENNZNET_NETWORK, ETHEREUM_NETWORK } from "@/libs/constants";
 import { getCENNZnetApi, getEthersProvider, getLogger } from "@/libs/utils";
-import { mainSubscriber } from "@claim-relayer/utils";
+import { mainSubscriber } from "@claim-relayer/scripts/mainSubscriber";
 
 const logger = getLogger("ClaimSubscriber");
 logger.info(

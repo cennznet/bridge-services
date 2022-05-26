@@ -1,7 +1,5 @@
 export { airDrop } from "@claim-relayer/utils/airDrop";
 export { handleDepositEvent } from "@claim-relayer/utils/handleDepositEvent";
-export { mainPublisher } from "@claim-relayer/utils/mainPublisher";
-export { mainSubscriber } from "@claim-relayer/utils/mainSubscriber";
 export { retryMessage } from "@claim-relayer/utils/retryMessage";
 export { sendCENNZnetClaimSubscriber } from "@claim-relayer/utils/sendCENNZnetClaimSubscriber";
 export { sendClaim } from "@claim-relayer/utils/sendClaim";
