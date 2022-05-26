@@ -3,7 +3,7 @@ import type { Api } from "@cennznet/api";
 import type { BaseProvider } from "@ethersproject/providers";
 
 import mongoose from "mongoose";
-import ethers from "ethers";
+import { Contract } from "ethers";
 import {
 	CENNZNET_NETWORK,
 	MONGODB_SERVER,
@@ -38,11 +38,7 @@ export async function mainPublisher(
 	// Keep track of latest finalized block
 	subscribeFinalizedBlock(cennzApi, logger);
 
-	const peg = new ethers.Contract(
-		PEG_CONTRACT_ADDRESS,
-		ERC20Peg.abi,
-		ethersProvider
-	);
+	const peg = new Contract(PEG_CONTRACT_ADDRESS, ERC20Peg.abi, ethersProvider);
 	logger.info(`Connecting to CENNZnet peg contract ${PEG_CONTRACT_ADDRESS}...`);
 
 	const eventConfirmations = (
