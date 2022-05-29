@@ -20,7 +20,7 @@ import { getLogger } from "@bs-libs/utils/getLogger";
 const logger = getLogger("ClaimPublisher");
 const { PEG_CONTRACT_ADDRESS } = NETWORK_DETAILS;
 
-export async function mainPublisher(
+export async function startClaimPublisher(
 	cennzApi: Api,
 	ethersProvider: BaseProvider
 ) {

@@ -1,5 +1,5 @@
 import { CENNZNET_NETWORK, ETHEREUM_NETWORK } from "@bs-libs/constants";
-import { mainPublisher } from "@claim-relayer/scripts/mainPublisher";
+import { startClaimPublisher } from "@claim-relayer/utils/startClaimPublisher";
 import { getLogger } from "@bs-libs/utils/getLogger";
 import { getEthersProvider } from "@bs-libs/utils/getEthersProvider";
 import { getCENNZnetApi } from "@bs-libs/utils/getCENNZnetApi";
@@ -12,7 +12,7 @@ logger.info(
 );
 Promise.all([getCENNZnetApi(), getEthersProvider()])
 	.then(async ([cennzApi, ethersProvider]) => {
-		return mainPublisher(cennzApi, ethersProvider);
+		return startClaimPublisher(cennzApi, ethersProvider);
 	})
 	.catch((error) => {
 		logger.error(error);

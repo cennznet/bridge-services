@@ -29,7 +29,7 @@ const logger = getLogger("ClaimSubscriber");
 let nonce: number;
 let firstMessage = true;
 
-export async function mainSubscriber(
+export async function startClaimSubscriber(
 	cennzApi: Api,
 	ethersProvider: BaseProvider
 ): Promise<void> {
