@@ -1,8 +1,12 @@
 {
-  "name": "claim-relayer",
-  "scripts": {
-    "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
-    "start:claim-publisher": "node ./dist/services/claim-relayer/commands/claim-publisher.js",
-    "start:claim-subscriber": "node ./dist/services/claim-relayer/commands/claim-subscriber.js"
+  "name": "@bridge-services/claim-relayer",
+  "version": "1.0.0",
+  "dependencies": {
+    "amqplib": "^0.9.1",
+    "bn.js": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0",
+    "@types/bn.js": "^5"
   }
 }
