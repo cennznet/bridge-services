@@ -10,22 +10,53 @@
     "node": ">=16"
   },
   "scripts": {
-    "dev:cennznet": "docker run -p 9944:9944 -p 9933:9933 cennznet/cennznet:latest --dev --unsafe-ws-external --unsafe-rpc-external",
-    "dev:execute": "ts-node -r tsconfig-paths/register",
-    "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
-    "format": "prettier --config .prettierrc.json ./ --write"
+    "format": "prettier --config .prettierrc.json ./ --write",
+    "build:claim-relayer": "nx build claim-relayer",
+    "lint:claim-relayer": "nx lint claim-relayer",
+    "test:claim-relayer": "nx test claim-relayer",
+    "dev:claim-publisher": "nx dev:publisher claim-relayer",
+    "dev:claim-subscriber": "nx dev:subscriber claim-relayer"
+  },
+  "dependencies": {
+    "@cennznet/api": "^2.1.1-alpha.4",
+    "@cloudamqp/amqp-client": "^2.0.3",
+    "@slack/webhook": "^6.1.0",
+    "ethers": "^5.6.8",
+    "mongoose": "^6.3.4",
+    "tslib": "^2.3.0",
+    "winston": "^3.7.2"
   },
   "devDependencies": {
-    "@types/node": "^17.0.35",
-    "@types/prettier": "^2",
-    "dotenv": "^16.0.1",
-    "prettier": "^2.6.2",
-    "ts-node": "^10.8.0",
+    "@cennznet/types": "^2.1.1-alpha.4",
+    "@nrwl/cli": "14.1.9",
+    "@nrwl/eslint-plugin-nx": "14.1.9",
+    "@nrwl/jest": "14.1.9",
+    "@nrwl/js": "14.1.9",
+    "@nrwl/linter": "14.1.9",
+    "@nrwl/nx-cloud": "latest",
+    "@nrwl/workspace": "14.1.9",
+    "@types/jest": "27.4.1",
+    "@types/node": "16.11.7",
+    "@typescript-eslint/eslint-plugin": "~5.18.0",
+    "@typescript-eslint/parser": "~5.18.0",
+    "eslint": "~8.12.0",
+    "eslint-config-prettier": "8.1.0",
+    "ethereum-waffle": "^3.4.4",
+    "jest": "27.5.1",
+    "nx": "14.1.9",
+    "prettier": "^2.5.1",
+    "ts-jest": "27.1.4",
+    "ts-node": "9.1.1",
     "tsc-alias": "^1.6.7",
     "tsconfig-paths": "^4.0.0",
-    "typescript": "^4.7.2"
+    "typescript": "~4.6.2"
+  },
+  "resolutions": {
+    "@polkadot/keyring": "^8.7.1",
+    "@polkadot/util": "^8.7.1",
+    "@polkadot/util-crypto": "^8.7.1"
   },
   "workspaces": [
-    "services/*"
+    "services/**"
   ]
 }
