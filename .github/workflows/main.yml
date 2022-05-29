@@ -33,6 +33,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - uses: nrwl/nx-set-shas@v2
+        with:
+          main-branch-name: develop
       - run: yarn install --immutable
 
       - run: yarn nx workspace-lint
