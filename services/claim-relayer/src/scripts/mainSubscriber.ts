@@ -6,6 +6,8 @@ import * as amqp from "amqplib";
 import { Keyring } from "@polkadot/keyring";
 import { cryptoWaitReady } from "@polkadot/util-crypto";
 import {
+	RABBITMQ_CONSUMER_MESSAGE_LIMIT,
+	RABBITMQ_MESSAGE_TIMEOUT,
 	TOPIC_CENNZnet_CONFIRM,
 	TOPIC_VERIFY_CONFIRM,
 } from "@claim-relayer/libs/constants";
@@ -50,24 +52,19 @@ export async function mainSubscriber(
 	// Keep track of latest finalized block
 	subscribeFinalizedBlock(cennzApi, logger);
 
-	//Setup rabbitMQ
-	const consumerMessageLimit = 10;
-	const messageTimeout = 60000 * 5; //5 minutes
-
+	//Setup RabbitMQ
 	const sendClaimChannel = await rabbit.createChannel();
 	await sendClaimChannel.assertQueue(TOPIC_CENNZnet_CONFIRM, {
 		durable: true,
-		messageTtl: messageTimeout,
+		messageTtl: RABBITMQ_MESSAGE_TIMEOUT,
 	});
 	const verifyClaimChannel = await rabbit.createChannel();
 	await verifyClaimChannel.assertQueue(TOPIC_VERIFY_CONFIRM, {
 		durable: true,
-		messageTtl: messageTimeout,
+		messageTtl: RABBITMQ_MESSAGE_TIMEOUT,
 	});
-	await sendClaimChannel.prefetch(consumerMessageLimit);
-	await verifyClaimChannel.prefetch(consumerMessageLimit);
-	const initialDelay = 5000;
-	const maxRetries = 3;
+	await sendClaimChannel.prefetch(RABBITMQ_CONSUMER_MESSAGE_LIMIT);
+	await verifyClaimChannel.prefetch(RABBITMQ_CONSUMER_MESSAGE_LIMIT);
 	await sendClaimChannel.consume(TOPIC_CENNZnet_CONFIRM, async (message) => {
 		try {
 			logger.info(
@@ -107,8 +104,6 @@ export async function mainSubscriber(
 				sendClaimChannel,
 				TOPIC_CENNZnet_CONFIRM,
 				message!,
-				initialDelay,
-				maxRetries,
 				failedCB
 			);
 		}
@@ -135,8 +130,6 @@ export async function mainSubscriber(
 				verifyClaimChannel,
 				TOPIC_VERIFY_CONFIRM,
 				message!,
-				initialDelay,
-				maxRetries,
 				failedCB
 			);
 		}

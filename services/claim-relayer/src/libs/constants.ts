@@ -1,6 +1,3 @@
-export const MESSAGE_MAX_RETRY = Number(process.env.MESSAGE_MAX_RETRY ?? 3);
-export const MESSAGE_MAX_TIME = Number(process.env.MESSAGE_MAX_TIME ?? 10000);
-
 export const AIRDROP_AMOUNT = 50000;
 
 export const Collections: Record<string, string> = {
@@ -15,3 +12,12 @@ export const MSG_QUEUE_NETWORK: string = process.env.MSG_QUEUE_NETWORK ?? "";
 
 export const TOPIC_CENNZnet_CONFIRM = `STATE_CENNZ_CONFIRM_${MSG_QUEUE_NETWORK}`;
 export const TOPIC_VERIFY_CONFIRM = `STATE_VERIFY_CONFIRM_${MSG_QUEUE_NETWORK}`;
+
+export const RABBITMQ_CONSUMER_MESSAGE_LIMIT =
+	Number(process.env.RABBITMQ_CONSUMER_MESSAGE_LIMIT) ?? 10;
+export const RABBITMQ_MESSAGE_TIMEOUT =
+	Number(process.env.RABBITMQ_MESSAGE_TIMEOUT) ?? 60000 * 5; //5 minutes;
+export const RABBITMQ_MAX_RETRIES =
+	Number(process.env.RABBITMQ_MAX_RETRIES) ?? 3;
+export const RABBITMQ_INITIAL_DELAY =
+	Number(process.env.RABBITMQ_INITIAL_DELAY) ?? 5000;
