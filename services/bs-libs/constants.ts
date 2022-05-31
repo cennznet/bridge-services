@@ -22,7 +22,7 @@ export const ALCHEMY_API_TOKEN: string = process.env.ALCHEMY_API_TOKEN ?? "";
 
 export const SLACK_SECRET: string = process.env.SLACK_SECRET ?? "";
 
-const NETWORKS: Record<CENNZNetNetwork, NetworkDetails> = {
+export const NETWORKS: Record<CENNZNetNetwork, NetworkDetails> = {
 	azalea: {
 		PEG_CONTRACT_ADDRESS: "0x76BAc85e1E82cd677faa2b3f00C4a2626C4c6E32",
 		SPENDING_ASSET_ID: "2",
