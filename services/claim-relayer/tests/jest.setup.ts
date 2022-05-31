@@ -1,7 +1,7 @@
 import { Api } from "@cennznet/api";
 
 global.getCENNZApiForTest = () => {
-	let api: Api = new Api({
+	const api: Api = new Api({
 		provider: "wss://nikau.centrality.me/public/ws",
 	});
 	//@ts-ignore
