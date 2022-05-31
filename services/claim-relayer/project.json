@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "services/claim-relayer/src",
+  "sourceRoot": "services/claim-relayer",
   "projectType": "library",
   "targets": {
     "build": {
@@ -19,7 +19,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "ts-node --project services/claim-relayer/tsconfig.json -r tsconfig-paths/register services/claim-relayer/src/commands/claim-publisher.ts"
+          "ts-node --project services/claim-relayer/tsconfig.json -r tsconfig-paths/register services/claim-relayer/commands/claim-publisher.ts"
         ]
       }
     },
@@ -27,7 +27,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "ts-node --project services/claim-relayer/tsconfig.json -r tsconfig-paths/register services/claim-relayer/src/commands/claim-subscriber.ts"
+          "ts-node --project services/claim-relayer/tsconfig.json -r tsconfig-paths/register services/claim-relayer/commands/claim-subscriber.ts"
         ]
       }
     },
