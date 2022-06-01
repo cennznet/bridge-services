@@ -98,13 +98,13 @@ export async function startClaimSubscriber(
 	await verifyClaimQueue.subscribe({ noAck: false }, async (message) => {
 		try {
 			logger.info(
-				`Received Message TOPIC_VERIFY_CONFIRM: ${message.toString()}`
+				`Received Message TOPIC_VERIFY_CONFIRM: ${message.bodyToString()}`
 			);
-			const data = JSON.parse(message.toString());
+			const data = JSON.parse(message.bodyToString() as string);
 			nonce = await verifyClaimSubscriber(data, cennzApi, nonce);
 			verifyClaimChannel.basicAck(message.deliveryTag);
 		} catch (e: any) {
-			const data = JSON.parse(message.toString());
+			const data = JSON.parse(message.bodyToString() as string);
 			const failedCB = () => {
 				sendSlackAlert(
 					`🚨 All retries failed for Message TOPIC_VERIFY_CONFIRM 🚨
