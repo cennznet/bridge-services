@@ -21,6 +21,7 @@ import {
 	MONGODB_SERVER,
 } from "@bs-libs/constants";
 import { getRabbitMQSet } from "@bs-libs/utils/getRabbitMQSet";
+import { hexToU8a } from "@polkadot/util";
 
 const logger = getLogger("ClaimSubscriber");
 
@@ -38,7 +39,7 @@ export async function startClaimSubscriber(
 
 	await cryptoWaitReady();
 	const signer = new Keyring({ type: "sr25519" }).addFromSeed(
-		CENNZNET_SIGNER as any
+		hexToU8a(CENNZNET_SIGNER)
 	);
 	nonce = (
 		await cennzApi.rpc.system.accountNextIndex(signer.address)

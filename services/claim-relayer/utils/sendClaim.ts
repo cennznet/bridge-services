@@ -7,6 +7,7 @@ import { updateTxStatusInDB } from "@claim-relayer/utils/updateTxStatusInDB";
 import { updateClaimEventsBlock } from "@claim-relayer/utils/updateClaimEventsBlock";
 import { CENNZNET_SIGNER } from "@bs-libs/constants";
 import { getLogger } from "@bs-libs/utils/getLogger";
+import { hexToU8a } from "@polkadot/util";
 
 const logger = getLogger("ClaimPublisher");
 
@@ -24,7 +25,7 @@ export async function sendClaim(
 	nonce: Nonce
 ): Promise<VerifyClaimData> {
 	const signer = new Keyring({ type: "sr25519" }).addFromSeed(
-		CENNZNET_SIGNER as any
+		hexToU8a(CENNZNET_SIGNER)
 	);
 
 	return new Promise((resolve, reject) => {

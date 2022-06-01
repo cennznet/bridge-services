@@ -13,6 +13,7 @@ import {
 } from "@bs-libs/constants";
 import { getLogger } from "@bs-libs/utils/getLogger";
 import { sendSlackAlert } from "@bs-libs/utils/sendSlackAlert";
+import { hexToU8a } from "@polkadot/util";
 
 const { SPENDING_ASSET_ID } = NETWORK_DETAILS;
 const logger = getLogger("ClaimPublisher");
@@ -24,7 +25,7 @@ export async function airDrop(
 ): Promise<Nonce> {
 	await cryptoWaitReady();
 	const signer = new Keyring({ type: "sr25519" }).addFromSeed(
-		CENNZNET_SIGNER as any
+		hexToU8a(CENNZNET_SIGNER)
 	);
 
 	const signerBalance = (await api.query.genericAsset.freeBalance(
