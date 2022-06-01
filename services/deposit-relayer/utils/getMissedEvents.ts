@@ -4,7 +4,7 @@ import { Event } from "ethers";
 
 const logger = getLogger("EthDepositPoller");
 
-export async function getMissedDepositEvents(
+export async function getMissedEvents(
 	allEvents: Event[]
 ): Promise<string[]> {
 	const depositEventTxHashes = allEvents

@@ -13,7 +13,7 @@ import { ethers } from "ethers";
 import { u64 } from "@cennznet/types";
 import { waitFor } from "@bs-libs/utils/waitFor";
 import { handleMissedEvents } from "@deposit-relayer/utils/handleMissedEvents";
-import { getMissedDepositEvents } from "@deposit-relayer/utils/getMissedDepositEvents";
+import { getMissedEvents } from "@deposit-relayer/utils/getMissedEvents";
 
 const { PEG_CONTRACT_ADDRESS } = NETWORK_DETAILS;
 
@@ -44,7 +44,7 @@ export async function startEthDepositPoller(
 
 		const allEvents = await peg.queryFilter({});
 
-		const missedDepositEventHashes = await getMissedDepositEvents(allEvents);
+		const missedDepositEventHashes = await getMissedEvents(allEvents);
 		const eventConfirmations = (
 			(await cennzApi.query.ethBridge.eventConfirmations()) as u64
 		).toNumber();
