@@ -1,9 +1,9 @@
 import { Api } from "@cennznet/api";
-import { updateClaimEventsInDB } from "@claim-relayer/utils/updateClaimEventsInDB";
-import { updateTxStatusInDB } from "@claim-relayer/utils/updateTxStatusInDB";
+import { updateClaimEventsInDB } from "@deposit-relayer/utils/updateClaimEventsInDB";
+import { updateTxStatusInDB } from "@deposit-relayer/utils/updateTxStatusInDB";
 import { AMQPQueue } from "@cloudamqp/amqp-client";
 import { Logger } from "winston";
-import { RABBITMQ_MESSAGE_TIMEOUT } from "@claim-relayer/libs/constants";
+import { RABBITMQ_MESSAGE_TIMEOUT } from "@deposit-relayer/libs/constants";
 
 /*
  * On eth side deposit push pub sub queue with the data,

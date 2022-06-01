@@ -1,5 +1,5 @@
 import { CENNZNET_NETWORK, ETHEREUM_NETWORK } from "@bs-libs/constants";
-import { startClaimSubscriber } from "@claim-relayer/utils/startClaimSubscriber";
+import { startClaimSubscriber } from "@deposit-relayer/utils/startClaimSubscriber";
 import { getLogger } from "@bs-libs/utils/getLogger";
 import { getEthersProvider } from "@bs-libs/utils/getEthersProvider";
 import { getCENNZnetApi } from "@bs-libs/utils/getCENNZnetApi";

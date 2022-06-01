@@ -1,5 +1,5 @@
 import { Event } from "ethers";
-import { handleDepositEvent } from "@claim-relayer/utils/handleDepositEvent";
+import { handleDepositEvent } from "@deposit-relayer/utils/handleDepositEvent";
 import { Api } from "@cennznet/api";
 import { AMQPQueue } from "@cloudamqp/amqp-client";
 import { getLogger } from "@bs-libs/utils/getLogger";

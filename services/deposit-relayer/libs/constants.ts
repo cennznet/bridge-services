@@ -22,5 +22,5 @@ export const RABBITMQ_MAX_RETRIES =
 export const RABBITMQ_INITIAL_DELAY =
 	Number(process.env.RABBITMQ_INITIAL_DELAY) ?? 5000;
 
-export const ETH_DEPOST_POLLER_INTERVAL =
-	Number(process.env.ETH_DEPOST_POLLER_INTERVAL) ?? 10;
+export const ETH_POLLER_INTERVAL =
+	Number(process.env.ETH_POLLER_INTERVAL) ?? 10;

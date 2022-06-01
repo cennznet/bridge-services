@@ -4,9 +4,9 @@ import type {
 	ClaimSubscriberData,
 	Nonce,
 	VerifyClaimData,
-} from "@claim-relayer/libs/types";
-import { sendClaim } from "@claim-relayer/utils/sendClaim";
-import { updateTxStatusInDB } from "@claim-relayer/utils/updateTxStatusInDB";
+} from "@deposit-relayer/libs/types";
+import { sendClaim } from "@deposit-relayer/utils/sendClaim";
+import { updateTxStatusInDB } from "@deposit-relayer/utils/updateTxStatusInDB";
 import { getLogger } from "@bs-libs/utils/getLogger";
 
 const logger = getLogger("ClaimSubscriber");

@@ -1,4 +1,4 @@
-import { Collections } from "@claim-relayer/libs/constants";
+import { Collections } from "@deposit-relayer/libs/constants";
 import { MONGODB_SERVER } from "@bs-libs/constants";
 import mongoose, { Schema, Model } from "mongoose";
 

@@ -1,10 +1,14 @@
-import type { Claim, Nonce, VerifyClaimData } from "@claim-relayer/libs/types";
+import type {
+	Claim,
+	Nonce,
+	VerifyClaimData,
+} from "@deposit-relayer/libs/types";
 
 import BN from "bn.js";
 import { encodeAddress, Keyring } from "@polkadot/keyring";
 import { Api, SubmittableResult } from "@cennznet/api";
-import { updateTxStatusInDB } from "@claim-relayer/utils/updateTxStatusInDB";
-import { updateClaimEventsBlock } from "@claim-relayer/utils/updateClaimEventsBlock";
+import { updateTxStatusInDB } from "@deposit-relayer/utils/updateTxStatusInDB";
+import { updateClaimEventsBlock } from "@deposit-relayer/utils/updateClaimEventsBlock";
 import { CENNZNET_SIGNER } from "@bs-libs/constants";
 import { getLogger } from "@bs-libs/utils/getLogger";
 import { hexToU8a } from "@polkadot/util";

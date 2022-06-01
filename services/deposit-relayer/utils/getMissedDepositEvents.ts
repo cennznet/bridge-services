@@ -1,4 +1,4 @@
-import { BridgeClaim } from "@claim-relayer/libs/models";
+import { BridgeClaim } from "@deposit-relayer/libs/models";
 import { getLogger } from "@bs-libs/utils/getLogger";
 import { Event } from "ethers";
 

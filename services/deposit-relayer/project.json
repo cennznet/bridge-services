@@ -1,16 +1,16 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "services/claim-relayer",
+  "sourceRoot": "services/deposit-relayer",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "nx:run-commands",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/claim-relayer",
+        "outputPath": "dist/deposit-relayer",
         "commands": [
-          "tsc -p services/claim-relayer/tsconfig.lib.json",
-          "tsc-alias -p services/claim-relayer/tsconfig.lib.json"
+          "tsc -p services/deposit-relayer/tsconfig.lib.json",
+          "tsc-alias -p services/deposit-relayer/tsconfig.lib.json"
         ],
         "parallel": false
       }
@@ -19,7 +19,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "ts-node --project services/claim-relayer/tsconfig.json -r tsconfig-paths/register services/claim-relayer/commands/claim-publisher.ts"
+          "ts-node --project services/deposit-relayer/tsconfig.json -r tsconfig-paths/register services/deposit-relayer/commands/claim-publisher.ts"
         ]
       }
     },
@@ -27,7 +27,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "ts-node --project services/claim-relayer/tsconfig.json -r tsconfig-paths/register services/claim-relayer/commands/claim-subscriber.ts"
+          "ts-node --project services/deposit-relayer/tsconfig.json -r tsconfig-paths/register services/deposit-relayer/commands/claim-subscriber.ts"
         ]
       }
     },
@@ -35,7 +35,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "ts-node --project services/claim-relayer/tsconfig.json -r tsconfig-paths/register services/claim-relayer/commands/eth-poller.ts"
+          "ts-node --project services/deposit-relayer/tsconfig.json -r tsconfig-paths/register services/deposit-relayer/commands/eth-poller.ts"
         ]
       }
     },
@@ -43,14 +43,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["services/claim-relayer/**/*.ts"]
+        "lintFilePatterns": ["services/deposit-relayer/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/services/claim-relayer"],
+      "outputs": ["coverage/services/deposit-relayer"],
       "options": {
-        "jestConfig": "services/claim-relayer/jest.config.ts",
+        "jestConfig": "services/deposit-relayer/jest.config.ts",
         "passWithNoTests": true
       }
     }

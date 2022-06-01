@@ -11,12 +11,12 @@
   },
   "scripts": {
     "format": "prettier --config .prettierrc.json ./ --write",
-    "build:claim-relayer": "nx build claim-relayer",
-    "lint:claim-relayer": "nx lint claim-relayer",
-    "test:claim-relayer": "nx test claim-relayer",
-    "dev:claim-publisher": "nx dev:publisher claim-relayer",
-    "dev:claim-subscriber": "nx dev:subscriber claim-relayer",
-    "dev:eth-deposit-poller": "nx dev:eth-poller claim-relayer"
+    "build:deposit-relayer": "nx build deposit-relayer",
+    "lint:deposit-relayer": "nx lint deposit-relayer",
+    "test:deposit-relayer": "nx test deposit-relayer",
+    "dev:deposit-publisher": "nx dev:publisher deposit-relayer",
+    "dev:deposit-subscriber": "nx dev:subscriber deposit-relayer",
+    "dev:eth-deposit-poller": "nx dev:eth-poller deposit-relayer"
   },
   "dependencies": {
     "@cennznet/api": "^2.1.1-alpha.4",

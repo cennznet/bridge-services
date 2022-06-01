@@ -4,16 +4,16 @@ import mongoose from "mongoose";
 import { MONGODB_SERVER, NETWORK_DETAILS } from "@bs-libs/constants";
 import { getLogger } from "@bs-libs/utils/getLogger";
 import {
-	ETH_DEPOST_POLLER_INTERVAL,
+	ETH_POLLER_INTERVAL,
 	TOPIC_CENNZnet_CONFIRM,
-} from "@claim-relayer/libs/constants";
+} from "@deposit-relayer/libs/constants";
 import { getRabbitMQSet } from "@bs-libs/utils/getRabbitMQSet";
 import * as ERC20Peg from "@bs-libs/abi/ERC20Peg.json";
 import { ethers } from "ethers";
 import { u64 } from "@cennznet/types";
 import { waitFor } from "@bs-libs/utils/waitFor";
-import { handleMissedEvents } from "@claim-relayer/utils/handleMissedEvents";
-import { getMissedDepositEvents } from "@claim-relayer/utils/getMissedDepositEvents";
+import { handleMissedEvents } from "@deposit-relayer/utils/handleMissedEvents";
+import { getMissedDepositEvents } from "@deposit-relayer/utils/getMissedDepositEvents";
 
 const { PEG_CONTRACT_ADDRESS } = NETWORK_DETAILS;
 
@@ -56,6 +56,6 @@ export async function startEthDepositPoller(
 			missedDepositEventHashes,
 			eventConfirmations
 		);
-		await waitFor(ETH_DEPOST_POLLER_INTERVAL);
+		await waitFor(ETH_POLLER_INTERVAL);
 	}
 }

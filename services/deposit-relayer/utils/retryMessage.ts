@@ -2,7 +2,7 @@ import { waitFor } from "@bs-libs/utils/waitFor";
 import {
 	RABBITMQ_INITIAL_DELAY,
 	RABBITMQ_MAX_RETRIES,
-} from "@claim-relayer/libs/constants";
+} from "@deposit-relayer/libs/constants";
 import { AMQPChannel, AMQPMessage, AMQPQueue } from "@cloudamqp/amqp-client";
 
 export async function retryMessage(

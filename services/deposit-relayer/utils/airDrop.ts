@@ -1,11 +1,11 @@
 import type { Balance } from "@cennznet/types";
-import type { Nonce } from "@claim-relayer/libs/types";
+import type { Nonce } from "@deposit-relayer/libs/types";
 
-import { AIRDROP_AMOUNT } from "@claim-relayer/libs/constants";
+import { AIRDROP_AMOUNT } from "@deposit-relayer/libs/constants";
 import { Api } from "@cennznet/api";
 import { Keyring } from "@polkadot/keyring";
 import { cryptoWaitReady } from "@polkadot/util-crypto";
-import { BridgeClaim } from "@claim-relayer/libs/models";
+import { BridgeClaim } from "@deposit-relayer/libs/models";
 import {
 	CENNZNET_NETWORK,
 	CENNZNET_SIGNER,

@@ -9,11 +9,11 @@ import {
 	RABBITMQ_MESSAGE_TIMEOUT,
 	TOPIC_CENNZnet_CONFIRM,
 	TOPIC_VERIFY_CONFIRM,
-} from "@claim-relayer/libs/constants";
-import { subscribeFinalizedBlock } from "@claim-relayer/utils/subscribeFinalizedBlock";
-import { sendCENNZnetClaimSubscriber } from "@claim-relayer/utils/sendCENNZnetClaimSubscriber";
-import { verifyClaimSubscriber } from "@claim-relayer/utils/verifyClaimSubscriber";
-import { retryMessage } from "@claim-relayer/utils/retryMessage";
+} from "@deposit-relayer/libs/constants";
+import { subscribeFinalizedBlock } from "@deposit-relayer/utils/subscribeFinalizedBlock";
+import { sendCENNZnetClaimSubscriber } from "@deposit-relayer/utils/sendCENNZnetClaimSubscriber";
+import { verifyClaimSubscriber } from "@deposit-relayer/utils/verifyClaimSubscriber";
+import { retryMessage } from "@deposit-relayer/utils/retryMessage";
 import { getLogger } from "@bs-libs/utils/getLogger";
 import { sendSlackAlert } from "@bs-libs/utils/sendSlackAlert";
 import { CENNZNET_SIGNER, MONGODB_SERVER } from "@bs-libs/constants";
