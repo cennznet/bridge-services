@@ -2,12 +2,10 @@ import type { Api } from "@cennznet/api";
 import type { BaseProvider } from "@ethersproject/providers";
 
 import mongoose from "mongoose";
-import * as amqp from "amqplib";
 import { Keyring } from "@polkadot/keyring";
 import { cryptoWaitReady } from "@polkadot/util-crypto";
 import {
 	RABBITMQ_CONSUMER_MESSAGE_LIMIT,
-	RABBITMQ_MESSAGE_TIMEOUT,
 	TOPIC_CENNZnet_CONFIRM,
 	TOPIC_VERIFY_CONFIRM,
 } from "@claim-relayer/libs/constants";
@@ -21,8 +19,8 @@ import {
 	CENNZNET_NETWORK,
 	CENNZNET_SIGNER,
 	MONGODB_SERVER,
-	RABBBITMQ_SERVER,
 } from "@bs-libs/constants";
+import { getRabbitMQSet } from "@bs-libs/utils/getRabbitMQSet";
 
 const logger = getLogger("ClaimSubscriber");
 
@@ -35,10 +33,7 @@ export async function startClaimSubscriber(
 ): Promise<void> {
 	if (mongoose.connection.readyState !== 1)
 		await mongoose.connect(MONGODB_SERVER);
-	const rabbit = await amqp.connect(RABBBITMQ_SERVER);
-	logger.info(
-		`Rabbit MQ Connected to Host:  ${(rabbit.connection as any).stream._host}`
-	);
+
 	logger.info(`Connected to cennznet network ${CENNZNET_NETWORK}`);
 
 	await cryptoWaitReady();
@@ -53,24 +48,21 @@ export async function startClaimSubscriber(
 	subscribeFinalizedBlock(cennzApi, logger);
 
 	//Setup RabbitMQ
-	const sendClaimChannel = await rabbit.createChannel();
-	await sendClaimChannel.assertQueue(TOPIC_CENNZnet_CONFIRM, {
-		durable: true,
-		messageTtl: RABBITMQ_MESSAGE_TIMEOUT,
-	});
-	const verifyClaimChannel = await rabbit.createChannel();
-	await verifyClaimChannel.assertQueue(TOPIC_VERIFY_CONFIRM, {
-		durable: true,
-		messageTtl: RABBITMQ_MESSAGE_TIMEOUT,
-	});
+	const [sendClaimChannel, sendClaimQueue] = await getRabbitMQSet(
+		TOPIC_CENNZnet_CONFIRM
+	);
+	const [verifyClaimChannel, verifyClaimQueue] = await getRabbitMQSet(
+		TOPIC_VERIFY_CONFIRM
+	);
 	await sendClaimChannel.prefetch(RABBITMQ_CONSUMER_MESSAGE_LIMIT);
 	await verifyClaimChannel.prefetch(RABBITMQ_CONSUMER_MESSAGE_LIMIT);
-	await sendClaimChannel.consume(TOPIC_CENNZnet_CONFIRM, async (message) => {
+
+	await sendClaimQueue.subscribe({ noAck: false }, async (message) => {
 		try {
 			logger.info(
-				`Received Message TOPIC_CENNZnet_CONFIRM: ${message?.content.toString()}`
+				`Received Message TOPIC_CENNZnet_CONFIRM: ${message.bodyToString()}`
 			);
-			const data = JSON.parse(message!.content.toString());
+			const data = JSON.parse(message.bodyToString() as string);
 			const claimSubscriberResponse = await sendCENNZnetClaimSubscriber(
 				cennzApi,
 				ethersProvider,
@@ -82,15 +74,14 @@ export async function startClaimSubscriber(
 			nonce = claimSubscriberResponse.nonce;
 			firstMessage = claimSubscriberResponse.firstMessage;
 
-			sendClaimChannel.ack(message!);
-			verifyClaimChannel.sendToQueue(
-				TOPIC_VERIFY_CONFIRM,
-				Buffer.from(JSON.stringify(claimSubscriberResponse.verifyClaimData))
+			sendClaimChannel.basicAck(message.deliveryTag);
+			verifyClaimQueue.publish(
+				JSON.stringify(claimSubscriberResponse.verifyClaimData)
 			);
 		} catch (e: any) {
 			//if already sent claim don't try to resend
 			if (e.message === "AlreadyNotarized") return;
-			const data = JSON.parse(message!.content.toString());
+			const data = JSON.parse(message.bodyToString() as string);
 			const failedCB = () => {
 				sendSlackAlert(
 					`🚨 All retries failed for Message TOPIC_CENNZnet_CONFIRM 🚨
@@ -100,24 +91,20 @@ export async function startClaimSubscriber(
                 \n Error: ${e.message} `
 				);
 			};
-			await retryMessage(
-				sendClaimChannel,
-				TOPIC_CENNZnet_CONFIRM,
-				message!,
-				failedCB
-			);
+			await retryMessage(sendClaimChannel, sendClaimQueue, message, failedCB);
 		}
 	});
-	await verifyClaimChannel.consume(TOPIC_VERIFY_CONFIRM, async (message) => {
+
+	await verifyClaimQueue.subscribe({ noAck: false }, async (message) => {
 		try {
 			logger.info(
-				`Received Message TOPIC_VERIFY_CONFIRM: ${message!.content.toString()}`
+				`Received Message TOPIC_VERIFY_CONFIRM: ${message.toString()}`
 			);
-			const data = JSON.parse(message!.content.toString());
+			const data = JSON.parse(message.toString());
 			nonce = await verifyClaimSubscriber(data, cennzApi, nonce);
-			verifyClaimChannel.ack(message!);
+			verifyClaimChannel.basicAck(message.deliveryTag);
 		} catch (e: any) {
-			const data = JSON.parse(message!.content.toString());
+			const data = JSON.parse(message.toString());
 			const failedCB = () => {
 				sendSlackAlert(
 					`🚨 All retries failed for Message TOPIC_VERIFY_CONFIRM 🚨
@@ -128,8 +115,8 @@ export async function startClaimSubscriber(
 			};
 			await retryMessage(
 				verifyClaimChannel,
-				TOPIC_VERIFY_CONFIRM,
-				message!,
+				verifyClaimQueue,
+				message,
 				failedCB
 			);
 		}

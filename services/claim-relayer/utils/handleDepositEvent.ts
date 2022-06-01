@@ -1,9 +1,8 @@
-import { TOPIC_CENNZnet_CONFIRM } from "@claim-relayer/libs/constants";
 import { Api } from "@cennznet/api";
-import { Channel } from "amqplib";
 import { updateClaimEventsInDB } from "@claim-relayer/utils/updateClaimEventsInDB";
 import { updateTxStatusInDB } from "@claim-relayer/utils/updateTxStatusInDB";
 import { getLogger } from "@bs-libs/utils/getLogger";
+import { AMQPQueue } from "@cloudamqp/amqp-client";
 
 const logger = getLogger("ClaimPublisher");
 
@@ -18,7 +17,7 @@ export async function handleDepositEvent(
 	amount: string,
 	tokenAddress: string,
 	eventConfirmations: number,
-	channel: Channel
+	queue: AMQPQueue
 ) {
 	const claim = {
 		tokenAddress,
@@ -27,10 +26,7 @@ export async function handleDepositEvent(
 	};
 
 	const data = { txHash, claim, confirms: eventConfirmations };
-	channel.sendToQueue(
-		TOPIC_CENNZnet_CONFIRM,
-		Buffer.from(JSON.stringify(data))
-	);
+	await queue.publish(JSON.stringify(data));
 
 	await updateTxStatusInDB(
 		"EthereumConfirming",
