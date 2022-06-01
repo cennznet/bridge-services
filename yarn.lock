@@ -398,15 +398,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bridge-services/claim-relayer@workspace:services/claim-relayer":
-  version: 0.0.0-use.local
-  resolution: "@bridge-services/claim-relayer@workspace:services/claim-relayer"
-  dependencies:
-    "@types/bn.js": ^5
-    bn.js: ^5.2.1
-  languageName: unknown
-  linkType: soft
-
 "@cennznet/api@npm:^2.1.1-alpha.4":
   version: 2.1.1-alpha.4
   resolution: "@cennznet/api@npm:2.1.1-alpha.4"
@@ -4082,6 +4073,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ~5.18.0
     "@typescript-eslint/parser": ~5.18.0
     bn.js: ^5.2.1
+    chalk: ^4
     eslint: ~8.12.0
     eslint-config-prettier: 8.1.0
     ethereum-waffle: ^3.4.4
@@ -4499,7 +4491,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^4.0.0, chalk@npm:^4.0.2":
+"chalk@npm:^4, chalk@npm:^4.0.0, chalk@npm:^4.0.2":
   version: 4.1.2
   resolution: "chalk@npm:4.1.2"
   dependencies:

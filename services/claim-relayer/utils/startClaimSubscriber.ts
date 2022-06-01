@@ -34,7 +34,7 @@ export async function startClaimSubscriber(
 	if (mongoose.connection.readyState !== 1)
 		await mongoose.connect(MONGODB_SERVER);
 
-	logger.info(`Connected to cennznet network ${CENNZNET_NETWORK}`);
+	logger.info(`Connected to CENNZnet network ${CENNZNET_NETWORK}`, CENNZNET_NETWORK);
 
 	await cryptoWaitReady();
 	const signer = new Keyring({ type: "sr25519" }).addFromSeed(

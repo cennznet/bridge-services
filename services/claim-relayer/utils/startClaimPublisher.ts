@@ -27,7 +27,7 @@ export async function startClaimPublisher(
 	if (mongoose.connection.readyState !== 1)
 		await mongoose.connect(MONGODB_SERVER);
 
-	logger.info(`Connect to cennznet network ${CENNZNET_NETWORK}`);
+	logger.info(`Connected to CENNZnet network ${CENNZNET_NETWORK}`);
 
 	const [, queue] = await getRabbitMQSet(TOPIC_CENNZnet_CONFIRM);
 
