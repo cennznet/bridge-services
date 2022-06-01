@@ -4,10 +4,14 @@ import * as chalk from "chalk";
 type LoggerService = "ClaimSubscriber" | "ClaimPublisher" | "SlackAlert";
 const instances = {} as Record<LoggerService, Logger>;
 
+const cennzBlue = chalk.hex("#1130FF");
+const cennzGreen = chalk.hex("#05b210");
+const cennzPurple = chalk.hex("#9847FF");
+
 const labels = {
-	ClaimSubscriber: chalk.blue("ClaimSubscriber"),
-	ClaimPublisher: chalk.green("ClaimPublisher"),
-	SlackAlert: chalk.cyan("SlackAlert"),
+	ClaimSubscriber: cennzBlue("ClaimSubscriber"),
+	ClaimPublisher: cennzGreen("ClaimPublisher"),
+	SlackAlert: cennzPurple("SlackAlert"),
 };
 
 export function getLogger(service: LoggerService): Logger {
