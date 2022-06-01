@@ -4,9 +4,7 @@ import { Event } from "ethers";
 
 const logger = getLogger("EthDepositPoller");
 
-export async function getMissedEvents(
-	allEvents: Event[]
-): Promise<string[]> {
+export async function getMissedEvents(allEvents: Event[]): Promise<string[]> {
 	const depositEventTxHashes = allEvents
 		.filter((event) => event.event === "Deposit")
 		.map((event) => event.transactionHash);

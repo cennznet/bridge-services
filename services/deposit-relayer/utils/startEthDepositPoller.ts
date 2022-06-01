@@ -10,10 +10,10 @@ import {
 import { getRabbitMQSet } from "@bs-libs/utils/getRabbitMQSet";
 import * as ERC20Peg from "@bs-libs/abi/ERC20Peg.json";
 import { ethers } from "ethers";
-import { u64 } from "@cennznet/types";
 import { waitFor } from "@bs-libs/utils/waitFor";
 import { handleMissedEvents } from "@deposit-relayer/utils/handleMissedEvents";
 import { getMissedEvents } from "@deposit-relayer/utils/getMissedEvents";
+import { fetchBridgeEventConfirmations } from "@deposit-relayer/utils/fetchBridgeEventConfirmations";
 
 const { PEG_CONTRACT_ADDRESS } = NETWORK_DETAILS;
 
@@ -45,9 +45,7 @@ export async function startEthDepositPoller(
 		const allEvents = await peg.queryFilter({});
 
 		const missedDepositEventHashes = await getMissedEvents(allEvents);
-		const eventConfirmations = (
-			(await cennzApi.query.ethBridge.eventConfirmations()) as u64
-		).toNumber();
+		const eventConfirmations = await fetchBridgeEventConfirmations(cennzApi);
 
 		await handleMissedEvents(
 			cennzApi,

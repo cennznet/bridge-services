@@ -1,4 +1,3 @@
-import type { u64 } from "@cennznet/types";
 import type { Api } from "@cennznet/api";
 import type { BaseProvider } from "@ethersproject/providers";
 
@@ -11,6 +10,7 @@ import { handleDepositEvent } from "@deposit-relayer/utils/handleDepositEvent";
 import { MONGODB_SERVER, NETWORK_DETAILS } from "@bs-libs/constants";
 import { getLogger } from "@bs-libs/utils/getLogger";
 import { getRabbitMQSet } from "@bs-libs/utils/getRabbitMQSet";
+import { fetchBridgeEventConfirmations } from "@deposit-relayer/utils/fetchBridgeEventConfirmations";
 
 const logger = getLogger("ClaimPublisher");
 const { PEG_CONTRACT_ADDRESS } = NETWORK_DETAILS;
@@ -32,9 +32,7 @@ export async function startClaimPublisher(
 
 	logger.info(`Connecting to CENNZnet peg contract ${PEG_CONTRACT_ADDRESS}...`);
 
-	const eventConfirmations = (
-		(await cennzApi.query.ethBridge.eventConfirmations()) as u64
-	).toNumber();
+	const eventConfirmations = await fetchBridgeEventConfirmations(cennzApi);
 
 	peg.on(
 		"Deposit",
