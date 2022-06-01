@@ -105,6 +105,7 @@ export async function sendClaim(
 						}
 					}
 				}
-			);
+			)
+			.catch((err: any) => reject(err));
 	});
 }
