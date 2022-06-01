@@ -1,7 +1,11 @@
 import { createLogger, format, transports, Logger } from "winston";
 import * as chalk from "chalk";
 
-type LoggerService = "ClaimSubscriber" | "ClaimPublisher" | "SlackAlert";
+type LoggerService =
+	| "ClaimSubscriber"
+	| "ClaimPublisher"
+	| "SlackAlert"
+	| "EthDepositPoller";
 const instances = {} as Record<LoggerService, Logger>;
 
 const cennzBlue = chalk.hex("#1130FF");
@@ -11,7 +15,8 @@ const cennzPurple = chalk.hex("#9847FF");
 const labels = {
 	ClaimSubscriber: cennzBlue("ClaimSubscriber"),
 	ClaimPublisher: cennzGreen("ClaimPublisher"),
-	SlackAlert: cennzPurple("SlackAlert"),
+	SlackAlert: chalk.cyan("SlackAlert"),
+	EthDepositPoller: cennzPurple("EthDepositPoller"),
 };
 
 export function getLogger(service: LoggerService): Logger {

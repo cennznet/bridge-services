@@ -6,6 +6,7 @@ import { Keyring } from "@polkadot/keyring";
 import { cryptoWaitReady } from "@polkadot/util-crypto";
 import {
 	RABBITMQ_CONSUMER_MESSAGE_LIMIT,
+	RABBITMQ_MESSAGE_TIMEOUT,
 	TOPIC_CENNZnet_CONFIRM,
 	TOPIC_VERIFY_CONFIRM,
 } from "@claim-relayer/libs/constants";
@@ -15,11 +16,7 @@ import { verifyClaimSubscriber } from "@claim-relayer/utils/verifyClaimSubscribe
 import { retryMessage } from "@claim-relayer/utils/retryMessage";
 import { getLogger } from "@bs-libs/utils/getLogger";
 import { sendSlackAlert } from "@bs-libs/utils/sendSlackAlert";
-import {
-	CENNZNET_NETWORK,
-	CENNZNET_SIGNER,
-	MONGODB_SERVER,
-} from "@bs-libs/constants";
+import { CENNZNET_SIGNER, MONGODB_SERVER } from "@bs-libs/constants";
 import { getRabbitMQSet } from "@bs-libs/utils/getRabbitMQSet";
 import { hexToU8a } from "@polkadot/util";
 
@@ -34,8 +31,6 @@ export async function startClaimSubscriber(
 ): Promise<void> {
 	if (mongoose.connection.readyState !== 1)
 		await mongoose.connect(MONGODB_SERVER);
-
-	logger.info(`Connected to CENNZnet network ${CENNZNET_NETWORK}`);
 
 	await cryptoWaitReady();
 	const signer = new Keyring({ type: "sr25519" }).addFromSeed(
@@ -77,7 +72,8 @@ export async function startClaimSubscriber(
 
 			sendClaimChannel.basicAck(message.deliveryTag);
 			verifyClaimQueue.publish(
-				JSON.stringify(claimSubscriberResponse.verifyClaimData)
+				JSON.stringify(claimSubscriberResponse.verifyClaimData),
+				{ expiration: RABBITMQ_MESSAGE_TIMEOUT }
 			);
 		} catch (e: any) {
 			//if already sent claim don't try to resend

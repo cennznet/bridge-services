@@ -14,9 +14,9 @@ logger.info(
 	ETHEREUM_NETWORK
 );
 Promise.all([getCENNZnetApi(), getEthersProvider()])
-	.then(async ([cennzApi, ethersProvider]) => {
-		return startClaimPublisher(cennzApi, ethersProvider);
-	})
+	.then(([cennzApi, ethersProvider]) =>
+		startClaimPublisher(cennzApi, ethersProvider)
+	)
 	.catch((error) => {
 		logger.error(error);
 	});

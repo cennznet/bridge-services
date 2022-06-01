@@ -1,13 +1,13 @@
 import { CENNZNET_NETWORK, ETHEREUM_NETWORK } from "@bs-libs/constants";
-import { startClaimSubscriber } from "@claim-relayer/utils/startClaimSubscriber";
+import { startEthDepositPoller } from "@claim-relayer/utils/startEthDepositPoller";
 import { getLogger } from "@bs-libs/utils/getLogger";
 import { getEthersProvider } from "@bs-libs/utils/getEthersProvider";
 import { getCENNZnetApi } from "@bs-libs/utils/getCENNZnetApi";
 import * as chalk from "chalk";
 
-const logger = getLogger("ClaimSubscriber");
+const logger = getLogger("EthDepositPoller");
 logger.info(
-	`Start ClaimSubscriber with CENNZnet: ${chalk.magenta(
+	`Start EthDepositPoller with CENNZnet: ${chalk.magenta(
 		"%s"
 	)} | Ethereum: ${chalk.magenta("%s")}...`,
 	CENNZNET_NETWORK,
@@ -15,7 +15,7 @@ logger.info(
 );
 Promise.all([getCENNZnetApi(), getEthersProvider()])
 	.then(([cennzApi, ethersProvider]) =>
-		startClaimSubscriber(cennzApi, ethersProvider)
+		startEthDepositPoller(cennzApi, ethersProvider)
 	)
 	.catch((error) => {
 		logger.error(error);

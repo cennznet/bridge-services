@@ -8,11 +8,7 @@ import * as ERC20Peg from "@bs-libs/abi/ERC20Peg.json";
 import { TOPIC_CENNZnet_CONFIRM } from "@claim-relayer/libs/constants";
 import { subscribeFinalizedBlock } from "@claim-relayer/utils/subscribeFinalizedBlock";
 import { handleDepositEvent } from "@claim-relayer/utils/handleDepositEvent";
-import {
-	CENNZNET_NETWORK,
-	MONGODB_SERVER,
-	NETWORK_DETAILS,
-} from "@bs-libs/constants";
+import { MONGODB_SERVER, NETWORK_DETAILS } from "@bs-libs/constants";
 import { getLogger } from "@bs-libs/utils/getLogger";
 import { getRabbitMQSet } from "@bs-libs/utils/getRabbitMQSet";
 
@@ -26,8 +22,6 @@ export async function startClaimPublisher(
 	//check if db connection already connected for testing
 	if (mongoose.connection.readyState !== 1)
 		await mongoose.connect(MONGODB_SERVER);
-
-	logger.info(`Connected to CENNZnet network ${CENNZNET_NETWORK}`);
 
 	const [, queue] = await getRabbitMQSet(TOPIC_CENNZnet_CONFIRM);
 
@@ -54,7 +48,8 @@ export async function startClaimPublisher(
 				amount,
 				tokenAddress,
 				eventConfirmations,
-				queue
+				queue,
+				logger
 			);
 		}
 	);

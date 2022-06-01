@@ -15,7 +15,8 @@
     "lint:claim-relayer": "nx lint claim-relayer",
     "test:claim-relayer": "nx test claim-relayer",
     "dev:claim-publisher": "nx dev:publisher claim-relayer",
-    "dev:claim-subscriber": "nx dev:subscriber claim-relayer"
+    "dev:claim-subscriber": "nx dev:subscriber claim-relayer",
+    "dev:eth-deposit-poller": "nx dev:eth-poller claim-relayer"
   },
   "dependencies": {
     "@cennznet/api": "^2.1.1-alpha.4",

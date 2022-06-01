@@ -31,6 +31,14 @@
         ]
       }
     },
+    "dev:eth-poller": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "ts-node --project services/claim-relayer/tsconfig.json -r tsconfig-paths/register services/claim-relayer/commands/eth-poller.ts"
+        ]
+      }
+    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

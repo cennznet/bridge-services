@@ -1,10 +1,9 @@
 import { Api } from "@cennznet/api";
 import { updateClaimEventsInDB } from "@claim-relayer/utils/updateClaimEventsInDB";
 import { updateTxStatusInDB } from "@claim-relayer/utils/updateTxStatusInDB";
-import { getLogger } from "@bs-libs/utils/getLogger";
 import { AMQPQueue } from "@cloudamqp/amqp-client";
-
-const logger = getLogger("ClaimPublisher");
+import { Logger } from "winston";
+import { RABBITMQ_MESSAGE_TIMEOUT } from "@claim-relayer/libs/constants";
 
 /*
  * On eth side deposit push pub sub queue with the data,
@@ -17,7 +16,8 @@ export async function handleDepositEvent(
 	amount: string,
 	tokenAddress: string,
 	eventConfirmations: number,
-	queue: AMQPQueue
+	queue: AMQPQueue,
+	logger: Logger
 ) {
 	const claim = {
 		tokenAddress,
@@ -26,7 +26,9 @@ export async function handleDepositEvent(
 	};
 
 	const data = { txHash, claim, confirms: eventConfirmations };
-	await queue.publish(JSON.stringify(data));
+	await queue.publish(JSON.stringify(data), {
+		expiration: RABBITMQ_MESSAGE_TIMEOUT,
+	});
 
 	await updateTxStatusInDB(
 		"EthereumConfirming",
