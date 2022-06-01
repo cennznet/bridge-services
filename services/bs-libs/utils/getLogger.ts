@@ -5,10 +5,10 @@ type LoggerService = "ClaimSubscriber" | "ClaimPublisher" | "SlackAlert";
 const instances = {} as Record<LoggerService, Logger>;
 
 const labels = {
-	"ClaimSubscriber": chalk.blue("ClaimSubscriber"),
-	"ClaimPublisher": chalk.green("ClaimPublisher"),
-	"SlackAlert": chalk.cyan("SlackAlert"),
-}
+	ClaimSubscriber: chalk.blue("ClaimSubscriber"),
+	ClaimPublisher: chalk.green("ClaimPublisher"),
+	SlackAlert: chalk.cyan("SlackAlert"),
+};
 
 export function getLogger(service: LoggerService): Logger {
 	if (instances[service]) return instances[service];

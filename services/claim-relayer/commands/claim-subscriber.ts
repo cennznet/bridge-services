@@ -7,7 +7,9 @@ import * as chalk from "chalk";
 
 const logger = getLogger("ClaimSubscriber");
 logger.info(
-	`Start ClaimSubscriber with CENNZnet: ${chalk.magenta("%s")} | Ethereum: ${chalk.magenta("%s")}...`,
+	`Start ClaimSubscriber with CENNZnet: ${chalk.magenta(
+		"%s"
+	)} | Ethereum: ${chalk.magenta("%s")}...`,
 	CENNZNET_NETWORK,
 	ETHEREUM_NETWORK
 );
