@@ -3,6 +3,7 @@
   "version": 2,
   "projects": {
     "bs-libs": "services/bs-libs",
-    "claim-relayer": "services/claim-relayer"
+    "claim-relayer": "services/claim-relayer",
+    "withdraw-relayer": "services/withdraw-relayer"
   }
 }

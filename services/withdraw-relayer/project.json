@@ -1,0 +1,43 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "services/withdraw-relayer",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/withdraw-relayer",
+        "commands": [
+          "tsc -p services/withdraw-relayer/tsconfig.lib.json",
+          "tsc-alias -p services/withdraw-relayer/tsconfig.lib.json"
+        ],
+        "parallel": false
+      }
+    },
+    "dev:eth-poller": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "ts-node --project services/withdraw-relayer/tsconfig.json -r tsconfig-paths/register services/withdraw-relayer/commands/eth-poller.ts"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["services/withdraw-relayer/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/services/withdraw-relayer"],
+      "options": {
+        "jestConfig": "services/withdraw-relayer/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
