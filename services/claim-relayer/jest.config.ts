@@ -12,11 +12,6 @@ export default {
 	},
 	moduleFileExtensions: ["ts", "js", "html"],
 	coverageDirectory: "../../coverage/services/claim-relayer",
-	moduleNameMapper: {
-		// Handle module aliases
-		"^@bs-libs/(.*)$": "<rootDir>/../bs-libs/$1",
-		"^@claim-relayer/(.*)$": "<rootDir>/$1",
-	},
-	setupFiles: ["<rootDir>/tests/jest.setup.ts"],
+	setupFiles: ["../../jest.setup.ts"],
 	transformIgnorePatterns: ["<rootDir>/node_modules/(?!@cennznet/api)"],
 };
