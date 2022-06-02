@@ -1,6 +1,10 @@
 import { createLogger, format, transports, Logger } from "winston";
 
-type LoggerService = "ClaimSubscriber" | "ClaimPublisher" | "SlackAlert";
+type LoggerService =
+	| "ClaimSubscriber"
+	| "ClaimPublisher"
+	| "SlackAlert"
+	| "EthWithdrawPoller";
 const instances = {} as Record<LoggerService, Logger>;
 
 export function getLogger(service: LoggerService): Logger {

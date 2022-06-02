@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-	displayName: "claim-relayer",
+	displayName: "withdraw-relayer",
 	preset: "../../jest.preset.js",
 	globals: {
 		"ts-jest": {
@@ -11,7 +11,7 @@ export default {
 		"^.+\\.[tj]s$": "ts-jest",
 	},
 	moduleFileExtensions: ["ts", "js", "html"],
-	coverageDirectory: "../../coverage/services/claim-relayer",
+	coverageDirectory: "../../coverage/services/withdraw-relayer",
 	setupFiles: ["../../jest.setup.ts"],
 	transformIgnorePatterns: ["<rootDir>/node_modules/(?!@cennznet/api)"],
 };

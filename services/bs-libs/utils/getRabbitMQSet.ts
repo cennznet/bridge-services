@@ -1,9 +1,8 @@
 import { AMQPChannel, AMQPClient, AMQPQueue } from "@cloudamqp/amqp-client";
 import { RABBBITMQ_SERVER } from "@bs-libs/constants";
 
-type QueueName = "RequestQueue";
 export async function getRabbitMQSet(
-	name: QueueName
+	name: string
 ): Promise<[AMQPChannel, AMQPQueue]> {
 	const client = new AMQPClient(RABBBITMQ_SERVER);
 	const connection = await client.connect();

@@ -2,9 +2,6 @@ export const AIRDROP_AMOUNT = 50000;
 
 export const Collections: Record<string, string> = {
 	BRIDGE_CLAIM: "claims",
-	EVENT_PROCESSED: "events",
-	WITHDRAW_PROOF: "withdraw_proof",
-	EVENT_PROOF: "event_proof",
 	CLAIM_EVENTS: "claim_events",
 };
 

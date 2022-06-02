@@ -13,12 +13,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["*"],
-      "@claim-relayer": ["services/claim-relayer"],
-      "@claim-relayer/*": ["services/claim-relayer/*"]
-    }
+    "baseUrl": "."
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules"]
