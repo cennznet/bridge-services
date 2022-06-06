@@ -38,6 +38,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - uses: nrwl/nx-set-shas@v2
+        with:
+          main-branch-name: develop
+
       - name: Install dependencies
         run: pnpm install
 
