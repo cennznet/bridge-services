@@ -1,5 +1,5 @@
-import { ClaimEvents } from "@claim-relayer/libs/models";
-import { ClaimEventsParams } from "@claim-relayer/libs/types";
+import { ClaimEvents } from "@deposit-relayer/libs/models";
+import { ClaimEventsParams } from "@deposit-relayer/libs/types";
 import { getLogger } from "@bs-libs/utils/getLogger";
 
 const logger = getLogger("ClaimPublisher");

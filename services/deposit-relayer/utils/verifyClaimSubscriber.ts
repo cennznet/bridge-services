@@ -1,8 +1,8 @@
-import type { BridgeClaimData, Nonce } from "@claim-relayer/libs/types";
+import type { BridgeClaimData, Nonce } from "@deposit-relayer/libs/types";
 
 import { Api } from "@cennznet/api";
-import { airDrop } from "@claim-relayer/utils/airDrop";
-import { updateClaimInDB } from "@claim-relayer/utils/updateClaimInDB";
+import { airDrop } from "@deposit-relayer/utils/airDrop";
+import { updateClaimInDB } from "@deposit-relayer/utils/updateClaimInDB";
 import { getLogger } from "@bs-libs/utils/getLogger";
 import { waitFor } from "@bs-libs/utils/waitFor";
 

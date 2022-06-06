@@ -1,4 +1,4 @@
-import { BridgeClaim } from "@claim-relayer/libs/models";
+import { BridgeClaim } from "@deposit-relayer/libs/models";
 import { Logger } from "winston";
 
 export async function updateTxStatusInDB(

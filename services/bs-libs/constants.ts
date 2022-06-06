@@ -28,7 +28,7 @@ export const NETWORKS: Record<CENNZNetNetwork, NetworkDetails> = {
 		SPENDING_ASSET_ID: "2",
 	},
 	local: {
-		PEG_CONTRACT_ADDRESS: "0xa39E871e6e24f2d1Dd6AdA830538aBBE7b30F78F",
+		PEG_CONTRACT_ADDRESS: "",
 		SPENDING_ASSET_ID: "16001",
 	},
 	nikau: {

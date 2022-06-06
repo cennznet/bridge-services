@@ -1,0 +1,59 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "services/deposit-relayer",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/deposit-relayer",
+        "commands": [
+          "tsc -p services/deposit-relayer/tsconfig.lib.json",
+          "tsc-alias -p services/deposit-relayer/tsconfig.lib.json"
+        ],
+        "parallel": false
+      }
+    },
+    "dev:publisher": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "ts-node --project services/deposit-relayer/tsconfig.json -r tsconfig-paths/register services/deposit-relayer/commands/claim-publisher.ts"
+        ]
+      }
+    },
+    "dev:subscriber": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "ts-node --project services/deposit-relayer/tsconfig.json -r tsconfig-paths/register services/deposit-relayer/commands/claim-subscriber.ts"
+        ]
+      }
+    },
+    "dev:eth-poller": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "ts-node --project services/deposit-relayer/tsconfig.json -r tsconfig-paths/register services/deposit-relayer/commands/eth-poller.ts"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["services/deposit-relayer/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/services/deposit-relayer"],
+      "options": {
+        "jestConfig": "services/deposit-relayer/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

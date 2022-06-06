@@ -1,36 +1,35 @@
-import type { Channel, ConsumeMessage } from "amqplib";
-
 import { waitFor } from "@bs-libs/utils/waitFor";
 import {
 	RABBITMQ_INITIAL_DELAY,
 	RABBITMQ_MAX_RETRIES,
-} from "@claim-relayer/libs/constants";
+} from "@deposit-relayer/libs/constants";
+import { AMQPChannel, AMQPMessage, AMQPQueue } from "@cloudamqp/amqp-client";
 
 export async function retryMessage(
-	channel: Channel,
-	queueName: any,
-	message: ConsumeMessage,
+	channel: AMQPChannel,
+	queue: AMQPQueue,
+	message: AMQPMessage,
 	failedCallback: () => void
 ) {
 	try {
 		const headers = message.properties.headers || {};
-		const retryCount = (headers["x-retries"] || 0) + 1;
+		const retryCount = (Number(headers["x-retries"]) || 0) + 1;
 		const delayAmountSeconds =
 			(Math.pow(2, retryCount - 1) * RABBITMQ_INITIAL_DELAY) / 1000;
 		if (retryCount > RABBITMQ_MAX_RETRIES) {
 			// We're past our retry max count.  Dead-letter it.
-			channel.reject(message, false);
+			channel.basicReject(message.deliveryTag, false);
 			failedCallback();
 		} else {
 			headers["x-retries"] = retryCount;
 			message.properties.headers = headers;
 			await waitFor(delayAmountSeconds);
-			channel.sendToQueue(queueName, message.content, message.properties);
-			channel.ack(message);
+			queue.publish(message.bodyToString() as string, message.properties);
+			channel.basicAck(message.deliveryTag);
 		}
 	} catch (e: any) {
 		// if error thrown during retry
-		channel.nack(message);
+		channel.basicNack(message.deliveryTag);
 		throw new Error(e.message);
 	}
 }

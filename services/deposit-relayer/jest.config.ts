@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-	displayName: "claim-relayer",
+	displayName: "deposit-relayer",
 	preset: "../../jest.preset.js",
 	globals: {
 		"ts-jest": {
@@ -11,11 +11,11 @@ export default {
 		"^.+\\.[tj]s$": "ts-jest",
 	},
 	moduleFileExtensions: ["ts", "js", "html"],
-	coverageDirectory: "../../coverage/services/claim-relayer",
+	coverageDirectory: "../../coverage/services/deposit-relayer",
 	moduleNameMapper: {
 		// Handle module aliases
 		"^@bs-libs/(.*)$": "<rootDir>/../bs-libs/$1",
-		"^@claim-relayer/(.*)$": "<rootDir>/$1",
+		"^@deposit-relayer/(.*)$": "<rootDir>/$1",
 	},
 	setupFiles: ["<rootDir>/tests/jest.setup.ts"],
 	transformIgnorePatterns: ["<rootDir>/node_modules/(?!@cennznet/api)"],
