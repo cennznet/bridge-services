@@ -41,7 +41,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - run: nx workspace-lint
-      - run: nx affected --target=lint --parallel=3
-      - run: nx affected --target=test --parallel=3 --ci --code-coverage
-      - run: nx affected --target=build --parallel=3
+      - run: pnpm nx workspace-lint
+      - run: pnpm nx affected --target=lint --parallel=3
+      - run: pnpm nx affected --target=test --parallel=3 --ci --code-coverage
+      - run: pnpm nx affected --target=build --parallel=3
