@@ -3,13 +3,21 @@ import {
 	BridgeClaimInterface,
 } from "@deposit-relayer/libs/models";
 
+type BridgeClaimFilterType = "TxHash" | "ClaimId";
+
 export function createBridgeClaimUpdater(
-	txHash: string
+	filterType: BridgeClaimFilterType,
+	filter: string
 ): (data: Partial<BridgeClaimInterface>) => Promise<any> {
 	return async (data: Partial<BridgeClaimInterface>) =>
 		BridgeClaim.findOneAndUpdate(
-			{ txHash },
-			{ ...data, txHash, updatedAt: new Date() },
+			{ filter },
+			{
+				...data,
+				claimId: filterType === "ClaimId" && filter,
+				txHash: filterType === "TxHash" && filter,
+				updatedAt: new Date(),
+			},
 			{ upsert: true, new: true, setDefaultsOnInsert: true }
 		);
 }
