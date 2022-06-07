@@ -18,18 +18,18 @@ export async function retryMessage(
 			(Math.pow(2, retryCount - 1) * RABBITMQ_INITIAL_DELAY) / 1000;
 		if (retryCount > RABBITMQ_MAX_RETRIES) {
 			// We're past our retry max count.  Dead-letter it.
-			channel.basicReject(message.deliveryTag, false);
+			message.reject(false);
 			failedCallback();
 		} else {
 			headers["x-retries"] = retryCount;
 			message.properties.headers = headers;
 			await waitFor(delayAmountSeconds);
 			queue.publish(message.bodyToString() as string, message.properties);
-			channel.basicAck(message.deliveryTag);
+			message.ack();
 		}
 	} catch (e: any) {
 		// if error thrown during retry
-		channel.basicNack(message.deliveryTag);
+		message.nack();
 		throw new Error(e.message);
 	}
 }
