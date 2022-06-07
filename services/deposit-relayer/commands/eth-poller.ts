@@ -18,5 +18,5 @@ Promise.all([getCENNZnetApi(), getEthersProvider("Etherscan")])
 		startEthDepositPoller(cennzApi, ethersProvider)
 	)
 	.catch((error) => {
-		logger.error(error);
+		logger.error("%s", error);
 	});
