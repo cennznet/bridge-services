@@ -1,17 +1,19 @@
-import { BridgeClaim } from "@deposit-relayer/libs/models";
 import { Logger } from "winston";
+import { createBridgeClaimUpdater } from "@deposit-relayer/utils/createBridgeClaimUpdater";
 
 export async function updateTxStatusInDB(
 	txStatus: string,
 	txHash: string,
-	claimId: string | null,
+	claimId: string | undefined,
 	cennznetAddress: string,
 	logger: Logger
 ): Promise<void> {
-	const filter = { txHash };
-	const update = { txHash, status: txStatus, claimId, cennznetAddress };
-	const options = { upsert: true, new: true, setDefaultsOnInsert: true }; // create new if record does not exist, else update
-	await BridgeClaim.updateOne(filter, update, options);
+	const updateBridgeClaimRecord = createBridgeClaimUpdater(
+		"TxHash",
+		txHash
+	) as ReturnType<typeof createBridgeClaimUpdater>;
+
+	updateBridgeClaimRecord({ status: txStatus, claimId, cennznetAddress });
 	logger.info(
 		`CLAIM: Updated the bridge status ${txStatus} for txHash: ${txHash}`
 	);

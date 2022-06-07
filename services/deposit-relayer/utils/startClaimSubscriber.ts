@@ -19,6 +19,7 @@ import { sendSlackAlert } from "@bs-libs/utils/sendSlackAlert";
 import { CENNZNET_SIGNER, MONGODB_SERVER } from "@bs-libs/constants";
 import { getRabbitMQSet } from "@bs-libs/utils/getRabbitMQSet";
 import { hexToU8a } from "@polkadot/util";
+import { createBridgeClaimUpdater } from "@deposit-relayer/utils/createBridgeClaimUpdater";
 
 const logger = getLogger("ClaimSubscriber");
 
@@ -27,7 +28,8 @@ let firstMessage = true;
 
 export async function startClaimSubscriber(
 	cennzApi: Api,
-	ethersProvider: BaseProvider
+	ethersProvider: BaseProvider,
+	abortSignal: AbortSignal
 ): Promise<void> {
 	if (mongoose.connection.readyState !== 1)
 		await mongoose.connect(MONGODB_SERVER);
@@ -54,11 +56,39 @@ export async function startClaimSubscriber(
 	await verifyClaimChannel.prefetch(RABBITMQ_CONSUMER_MESSAGE_LIMIT);
 
 	await sendClaimQueue.subscribe({ noAck: false }, async (message) => {
+		let updateBridgeClaimRecord: any = null;
+		const body = message.bodyString();
+		if (!body) return;
+		const data = JSON.parse(body);
+
+		let messageDelivered = false;
+		updateBridgeClaimRecord = createBridgeClaimUpdater(
+			"TxHash",
+			data.txHash
+		) as ReturnType<typeof createBridgeClaimUpdater>;
+
 		try {
+			abortSignal.addEventListener(
+				"abort",
+				async () => {
+					if (messageDelivered) return;
+					await updateBridgeClaimRecord?.({ status: "Aborted" });
+					await message.reject(false);
+					logger.info(
+						"%s process aborted for txHash: %s",
+						TOPIC_CENNZnet_CONFIRM,
+						data.txHash
+					);
+					sendSlackAlert(`🚨 process aborted for Message ${TOPIC_CENNZnet_CONFIRM} 🚨
+                \n ETH Transaction: ${data.txHash} `);
+				},
+				{ once: true }
+			);
+
+			if (abortSignal.aborted) return;
 			logger.info(
 				`Received Message TOPIC_CENNZnet_CONFIRM: ${message.bodyToString()}`
 			);
-			const data = JSON.parse(message.bodyToString() as string);
 			const claimSubscriberResponse = await sendCENNZnetClaimSubscriber(
 				cennzApi,
 				ethersProvider,
@@ -70,15 +100,15 @@ export async function startClaimSubscriber(
 			nonce = claimSubscriberResponse.nonce;
 			firstMessage = claimSubscriberResponse.firstMessage;
 
-			sendClaimChannel.basicAck(message.deliveryTag);
+			messageDelivered = true;
+			message.ack();
 			verifyClaimQueue.publish(
 				JSON.stringify(claimSubscriberResponse.verifyClaimData),
 				{ expiration: RABBITMQ_MESSAGE_TIMEOUT }
 			);
 		} catch (e: any) {
 			//if already sent claim don't try to resend
-			if (e.message === "AlreadyNotarized") return;
-			const data = JSON.parse(message.bodyToString() as string);
+			if (e.message === "AlreadyNotarized" || abortSignal.aborted) return;
 			const failedCB = () => {
 				sendSlackAlert(
 					`🚨 All retries failed for Message TOPIC_CENNZnet_CONFIRM 🚨
@@ -93,15 +123,44 @@ export async function startClaimSubscriber(
 	});
 
 	await verifyClaimQueue.subscribe({ noAck: false }, async (message) => {
+		let updateBridgeClaimRecord: any = null;
+		const body = message.bodyString();
+		if (!body) return;
+		const data = JSON.parse(body);
+
+		let messageDelivered = false;
+		updateBridgeClaimRecord = createBridgeClaimUpdater(
+			"TxHash",
+			data.txHash
+		) as ReturnType<typeof createBridgeClaimUpdater>;
+
 		try {
+			abortSignal.addEventListener(
+				"abort",
+				async () => {
+					if (messageDelivered) return;
+					await updateBridgeClaimRecord?.({ status: "Aborted" });
+					await message.reject(false);
+					logger.info(
+						"%s process aborted for txHash: %s",
+						TOPIC_VERIFY_CONFIRM,
+						data.txHash
+					);
+					sendSlackAlert(`🚨 process aborted for Message ${TOPIC_VERIFY_CONFIRM} 🚨
+	                \n ETH Transaction: ${data.txHash} `);
+				},
+				{ once: true }
+			);
+
+			if (abortSignal.aborted) return;
 			logger.info(
 				`Received Message TOPIC_VERIFY_CONFIRM: ${message.bodyToString()}`
 			);
-			const data = JSON.parse(message.bodyToString() as string);
+			messageDelivered = true;
 			nonce = await verifyClaimSubscriber(data, cennzApi, nonce);
-			verifyClaimChannel.basicAck(message.deliveryTag);
+			message.ack();
 		} catch (e: any) {
-			const data = JSON.parse(message.bodyToString() as string);
+			if (abortSignal.aborted) return;
 			const failedCB = () => {
 				sendSlackAlert(
 					`🚨 All retries failed for Message TOPIC_VERIFY_CONFIRM 🚨
