@@ -33,7 +33,7 @@ export async function handleDepositEvent(
 	await updateTxStatusInDB(
 		"EthereumConfirming",
 		txHash,
-		null,
+		undefined,
 		cennzAddress,
 		logger
 	);

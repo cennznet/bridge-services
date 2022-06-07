@@ -53,7 +53,7 @@ export async function sendCENNZnetClaimSubscriber(
 			await updateTxStatusInDB(
 				"EthConfirmationTimeout",
 				txHash,
-				null,
+				undefined,
 				claim.beneficiary,
 				logger
 			);
