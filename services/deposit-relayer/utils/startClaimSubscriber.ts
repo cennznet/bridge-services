@@ -1,9 +1,5 @@
 import type { Api } from "@cennznet/api";
 import type { BaseProvider } from "@ethersproject/providers";
-import {
-	BridgeClaim,
-	BridgeClaimInterface,
-} from "@deposit-relayer/libs/models";
 
 import mongoose from "mongoose";
 import { Keyring } from "@polkadot/keyring";
@@ -67,7 +63,7 @@ export async function startClaimSubscriber(
 
 		let messageDelivered = false;
 		updateBridgeClaimRecord = createBridgeClaimUpdater(
-			data.txHash
+			"TxHash", data.txHash, 
 		) as ReturnType<typeof createBridgeClaimUpdater>;
 
 		try {
@@ -133,7 +129,7 @@ export async function startClaimSubscriber(
 
 		let messageDelivered = false;
 		updateBridgeClaimRecord = createBridgeClaimUpdater(
-			data.txHash
+			"TxHash", data.txHash
 		) as ReturnType<typeof createBridgeClaimUpdater>;
 
 		try {
