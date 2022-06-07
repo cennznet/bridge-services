@@ -18,7 +18,6 @@ logger.info(
 	ETHEREUM_NETWORK
 );
 
-
 Promise.all([getCENNZnetApi(), getEthersProvider("Contract")])
 	.then(([cennzApi, ethersProvider]) =>
 		startClaimSubscriber(

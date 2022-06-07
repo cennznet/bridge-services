@@ -46,4 +46,4 @@ export const NETWORKS: Record<CENNZNetNetwork, NetworkDetails> = {
 export const NETWORK_DETAILS: NetworkDetails =
 	NETWORKS[CENNZNET_NETWORK as CENNZNetNetwork];
 
-export const MESSAGE_MAX_TIME = Number(process.env.MESSAGE_MAX_TIME || 30000)
+export const MESSAGE_MAX_TIME = Number(process.env.MESSAGE_MAX_TIME || 30000);

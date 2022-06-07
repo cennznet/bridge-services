@@ -1,4 +1,7 @@
-import { BridgeClaim, BridgeClaimInterface } from "@deposit-relayer/libs/models";
+import {
+	BridgeClaim,
+	BridgeClaimInterface,
+} from "@deposit-relayer/libs/models";
 
 export function createBridgeClaimUpdater(
 	txHash: string
