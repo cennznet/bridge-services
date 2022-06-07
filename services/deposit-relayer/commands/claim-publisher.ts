@@ -13,7 +13,7 @@ logger.info(
 	CENNZNET_NETWORK,
 	ETHEREUM_NETWORK
 );
-Promise.all([getCENNZnetApi(), getEthersProvider()])
+Promise.all([getCENNZnetApi(), getEthersProvider("Contract")])
 	.then(([cennzApi, ethersProvider]) =>
 		startClaimPublisher(cennzApi, ethersProvider)
 	)
