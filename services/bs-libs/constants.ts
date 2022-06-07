@@ -20,6 +20,8 @@ export const INFURA_PROJECT = process.env.INFURA_PROJECT_ID
 
 export const ALCHEMY_API_TOKEN: string = process.env.ALCHEMY_API_TOKEN ?? "";
 
+export const ETHERSCAN_API_TOKEN = process.env.ETHERSCAN_API_TOKEN ?? "";
+
 export const SLACK_SECRET: string = process.env.SLACK_SECRET ?? "";
 
 export const NETWORKS: Record<CENNZNetNetwork, NetworkDetails> = {
