@@ -63,7 +63,8 @@ export async function startClaimSubscriber(
 
 		let messageDelivered = false;
 		updateBridgeClaimRecord = createBridgeClaimUpdater(
-			"TxHash", data.txHash, 
+			"TxHash",
+			data.txHash
 		) as ReturnType<typeof createBridgeClaimUpdater>;
 
 		try {
@@ -129,7 +130,8 @@ export async function startClaimSubscriber(
 
 		let messageDelivered = false;
 		updateBridgeClaimRecord = createBridgeClaimUpdater(
-			"TxHash", data.txHash
+			"TxHash",
+			data.txHash
 		) as ReturnType<typeof createBridgeClaimUpdater>;
 
 		try {

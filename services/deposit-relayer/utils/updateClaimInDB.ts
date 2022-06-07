@@ -8,11 +8,11 @@ export async function updateClaimInDB(
 	status: string
 ): Promise<void> {
 	const updateBridgeClaimRecord = createBridgeClaimUpdater(
-			"ClaimId", claimId
-		) as ReturnType<typeof createBridgeClaimUpdater>;
+		"ClaimId",
+		claimId
+	) as ReturnType<typeof createBridgeClaimUpdater>;
 
-	
-	updateBridgeClaimRecord({ status })
+	updateBridgeClaimRecord({ status });
 	logger.info(
 		`CLAIM Updated the bridge status ${status} for claimId: ${claimId}`
 	);

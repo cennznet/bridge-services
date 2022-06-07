@@ -9,10 +9,11 @@ export async function updateTxStatusInDB(
 	logger: Logger
 ): Promise<void> {
 	const updateBridgeClaimRecord = createBridgeClaimUpdater(
-			"TxHash", txHash
-		) as ReturnType<typeof createBridgeClaimUpdater>;
+		"TxHash",
+		txHash
+	) as ReturnType<typeof createBridgeClaimUpdater>;
 
-	updateBridgeClaimRecord({status: txStatus, claimId, cennznetAddress})
+	updateBridgeClaimRecord({ status: txStatus, claimId, cennznetAddress });
 	logger.info(
 		`CLAIM: Updated the bridge status ${txStatus} for txHash: ${txHash}`
 	);
