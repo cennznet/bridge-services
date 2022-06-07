@@ -92,7 +92,7 @@ export async function sendClaim(
 									await updateTxStatusInDB(
 										"AlreadyNotarized",
 										txHash,
-										null,
+										undefined,
 										claim.beneficiary,
 										logger
 									);
@@ -101,7 +101,7 @@ export async function sendClaim(
 								await updateTxStatusInDB(
 									"Failed",
 									txHash,
-									null,
+									undefined,
 									claim.beneficiary,
 									logger
 								);
